@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var animesRouter = require('./routes/animes');
-var animeIdRouter = require('./routes/animeId');
+var animeFindRouter = require('./routes/findAnime');
 var cors = require('cors');
 
 var app = express();
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/animes', animesRouter);
-app.use('/api/anime', animeIdRouter);
+app.use('/api/anime', animeFindRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
