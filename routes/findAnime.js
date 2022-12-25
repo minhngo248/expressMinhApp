@@ -5,10 +5,11 @@ var SPARQLQueryDispatcher = require('./SPARQLQueryDispatcher');
 const endpointUrl = "https://query.wikidata.org/sparql";
 const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
 
-router.get("/:name/:director/:date", (req, res, next) => {
+router.get("/:name/:director/:dateFrom/:dateTo", (req, res, next) => {
   var nameAnime = req.params.name;
   var director = req.params.director;
-  var date = req.params.date;
+  var dateFrom = req.params.dateFrom;
+  var dateTo = req.params.dateTo;
   var query = `SELECT DISTINCT ?item ?name ?director ?datePub WHERE {
     ?item rdfs:label ?name;
           p:P136 ?statement0;
@@ -19,7 +20,7 @@ router.get("/:name/:director/:date", (req, res, next) => {
     ?directorLab rdfs:label ?director.
     ?statement2 ps:P577 ?datePub.
     FILTER(langMatches(lang(?name), "EN") && langMatches(lang(?director), "EN") && contains(lcase(?name), lcase('${nameAnime}')) && 
-    contains(lcase(?director), lcase('${director}')) && ?datePub > '${date}'^^xsd:dateTime).
+    contains(lcase(?director), lcase('${director}')) && '${dateFrom}'^^xsd:dateTime <= ?datePub && ?datePub <= '${dateTo}'^^xsd:dateTime).
   }`;
  
   queryDispatcher.query(query).then((d) => {
