@@ -5,10 +5,11 @@ var SPARQLQueryDispatcher = require('./SPARQLQueryDispatcher');
 const endpointUrl = "https://query.wikidata.org/sparql";
 const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
 
-router.get("/:name/:director/:date", (req, res, next) => {
+router.get("/", (req, res, next) => {
   var nameAnime = req.params.name;
   var director = req.params.director;
   var date = req.params.date;
+  console.log(req.params.name + "  " + typeof(req.params));
   var query = `SELECT DISTINCT ?item ?name ?director ?datePub WHERE {
     ?item rdfs:label ?name;
           p:P136 ?statement0;
