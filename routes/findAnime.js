@@ -6,8 +6,8 @@ const endpointUrl = "https://query.wikidata.org/sparql";
 const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
 
 router.get("/", (req, res, next) => {
-  var nameAnime = req.query.name;
-  var director = req.query.director;
+  var nameAnime = decodeURIComponent(req.query.name);
+  var director = decodeURIComponent(req.query.director);
   var dateFrom = req.query.dateFrom;
   var dateTo = req.query.dateTo;
   var query = `SELECT DISTINCT ?item ?name ?director ?datePub WHERE {
