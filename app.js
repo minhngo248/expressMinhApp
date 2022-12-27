@@ -8,6 +8,8 @@ var indexRouter = require('./routes/index');
 var animesRouter = require('./routes/animes');
 var animeFindRouter = require('./routes/findAnime');
 var resultAnime = require('./routes/resultAnime');
+var resultAnime2 = require('./routes/resultAnime2');
+var resultAnime3 = require('./routes/resultAnime3');
 var cors = require('cors');
 
 var app = express();
@@ -32,6 +34,8 @@ app.use('/', indexRouter);
 app.use('/api/animes', animesRouter);
 app.use('/api/anime', animeFindRouter);
 app.use('/api/result', resultAnime);
+app.use('/api/result2', resultAnime2);
+app.use('/api/result3', resultAnime3);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
