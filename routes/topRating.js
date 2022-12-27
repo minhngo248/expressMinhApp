@@ -6,7 +6,7 @@ const endpointUrl = "https://query.wikidata.org/sparql";
 const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
 
 router.get("/", (req, res, next) => {
-  var query = `SELECT DISTINCT ?item ?itemLabel ?dirData ?director (COUNT(?rating) AS ?number) 
+  var query = `SELECT DISTINCT ?item ?itemLabel ?dirData ?director
   (GROUP_CONCAT(DISTINCT ?rating; SEPARATOR=", ") AS ?ratings)  
 WHERE {
 ?item p:P136 ?genreState;
