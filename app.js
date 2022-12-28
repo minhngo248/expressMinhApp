@@ -11,6 +11,7 @@ var resultAnime = require('./routes/resultAnime');
 var resultAnime2 = require('./routes/resultAnime2');
 var resultAnime3 = require('./routes/resultAnime3');
 var topRating = require('./routes/topRating');
+var topBoxOffice = require('./routes/topBoxOffice');
 var cors = require('cors');
 
 var app = express();
@@ -38,6 +39,7 @@ app.use('/api/result', resultAnime);
 app.use('/api/result2', resultAnime2);
 app.use('/api/result3', resultAnime3);
 app.use('/api/topRating', topRating);
+app.use('/api/topBoxOffice', topBoxOffice);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
