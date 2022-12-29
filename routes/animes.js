@@ -3,13 +3,15 @@ var router = express.Router();
 var SPARQLQueryDispatcher = require('./SPARQLQueryDispatcher');
 
 // the SPARQL query itself
-var query = `SELECT DISTINCT ?item ?itemLabel WHERE {
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "English". }
-  {
-    SELECT DISTINCT ?item WHERE {
-      ?item p:P136 ?statement0.
-      ?statement0 (ps:P136/(wdt:P279*)) wd:Q1107.
-    }
+var query = `SELECT DISTINCT ?item ?itemLabel ?dirData ?director WHERE {
+  ?item p:P136 ?genreStatement;
+        p:P57  ?dirState.
+  ?genreStatement (ps:P136/(wdt:P279*)) wd:Q1107.
+  ?dirState ps:P57 ?dirData.
+  SERVICE wikibase:label { 
+    bd:serviceParam wikibase:language "en". 
+    ?item rdfs:label ?itemLabel.
+    ?dirData rdfs:label ?director.
   }
 }`;
 

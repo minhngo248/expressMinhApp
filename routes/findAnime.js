@@ -11,16 +11,19 @@ router.get("/", (req, res, next) => {
   var dateFrom = req.query.dateFrom;
   var dateTo = req.query.dateTo;
   var query = `SELECT DISTINCT ?item ?name ?director ?datePub WHERE {
-    ?item rdfs:label ?name;
-          p:P136 ?statement0;
-          p:P57  ?statement1;
-          p:P577 ?statement2.
-    ?statement0 (ps:P136/(wdt:P279*)) wd:Q1107.
-    ?statement1 ps:P57 ?directorLab.
-    ?directorLab rdfs:label ?director.
-    ?statement2 ps:P577 ?datePub.
-    FILTER(langMatches(lang(?name), "EN") && langMatches(lang(?director), "EN") && contains(lcase(?name), lcase('${nameAnime}')) && 
-    contains(lcase(?director), lcase('${director}')) && '${dateFrom}'^^xsd:dateTime <= ?datePub && ?datePub <= '${dateTo}'^^xsd:dateTime).
+    ?item p:P136 ?genreStatement;
+          p:P57  ?dirStatement;
+          p:P577 ?dateStatement.
+    ?genreStatement (ps:P136/(wdt:P279*)) wd:Q1107.
+    ?dirStatement ps:P57 ?dirData.
+    ?dateStatement ps:P577 ?datePub.
+    SERVICE wikibase:label { 
+      bd:serviceParam wikibase:language "en". 
+      ?item rdfs:label ?name.
+      ?dirData rdfs:label ?director.
+    }
+    FILTER(contains(lcase(?name), lcase('${nameAnime}')) && contains(lcase(?director), lcase('${director}')) 
+    && '${dateFrom}'^^xsd:dateTime <= ?datePub && ?datePub <= '${dateTo}'^^xsd:dateTime).
   }
   ORDER BY (?datePub)`;
  
